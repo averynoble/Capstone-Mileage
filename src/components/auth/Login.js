@@ -12,19 +12,28 @@ export const Login = () => {
         .then(res => res.json())
         .then(user => user.length ? user[0] : false)
     }
+    
+    const handleInputChange = (event) => {
+        const newUser = { ...loginUser }
+        newUser[event.target.id] = event.target.value
+        setLoginUser(newUser)
+    }
+
+    existingUserCheck()
+    .then(exists => {
+        if (exists) {
+            sessionStorage.setItem("miles_user", exists.id)
+            history.push("/")
+        } else {
+            setExistDialog(true)
+        }
+    })
+
+
 
     const handleLogin = (e) => {
         e.preventDefault()
 
-        existingUserCheck()
-        .then(exists => {
-            if (exists) {
-                sessionStorage.setItem("miles_user", exists.id)
-                history.push("/")
-            } else {
-                setExistDialog(true)
-            }
-        })
     }
 
     return (
