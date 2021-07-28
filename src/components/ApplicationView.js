@@ -17,6 +17,10 @@ export const ApplicationViews = () => {
                     <Route exact path="/vehicles/create">
                         <VehicleForm />
                     </Route>
+
+                    <Route exact path="/vehicles/edit/:vehicleId(\d+)">
+                        <VehicleForm />
+                    </Route>
                 </VehicleProvider>
             }
         </>
