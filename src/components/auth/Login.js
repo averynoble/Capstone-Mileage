@@ -19,22 +19,21 @@ export const Login = () => {
         setLoginUser(newUser)
     }
 
-    existingUserCheck()
-    .then(exists => {
-        if (exists) {
-            sessionStorage.setItem("miles_user", exists.id)
-            history.push("/")
-        } else {
-            setExistDialog(true)
-        }
-    })
-
-
-
+    
     const handleLogin = (e) => {
         e.preventDefault()
-
+        existingUserCheck()
+        .then(exists => {
+            if (exists) {
+                sessionStorage.setItem("miles_user", exists.id)
+                history.push("/")
+            } else {
+                setExistDialog(true)
+            }
+        })
     }
+    
+    
 
     return (
         <main className="container--login">
