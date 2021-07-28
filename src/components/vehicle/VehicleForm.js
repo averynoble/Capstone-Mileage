@@ -1,11 +1,9 @@
 import React, {useContext, useEffect, useState} from "react"
 import { VehicleContext } from "./VehicleProvider"
 import { useHistory, useParams } from "react-router-dom"
-import { FriendContext } from "../friends/FriendsProvider";
 
 export const VehicleForm = () => {
     const { addVehicle, getVehicleById, updateVehicle } = useContext(VehicleContext)
-    const { friends, getFriends } = useContext(FriendContext)
 
     const [vehicle, setVehicle] = useState({})
 
@@ -14,8 +12,10 @@ export const VehicleForm = () => {
     const history = useHistory()
 
     const handleControlledInputChange = (event) => {
-        const newVehicle = {...vehicle}
+        const newVehicle = { ...vehicle }
+
         newVehicle[event.target.id] = event.target.value
+
         setVehicle(newVehicle)
     }
 
@@ -26,14 +26,14 @@ export const VehicleForm = () => {
             setIsLoading(true)
             if (vehicleId) {
                 updateVehicle({
-                    id: vehicleId,
+                    id: vehicle.id,
                     make: vehicle.make,
                     model: vehicle.model,
                     year: vehicle.year,
                     startingMileage: vehicle.startingMileage,
-                    oilId: vehicle.oilId,
-                    tiresId: vehicle.tiresId,
-                    airFilterId: vehicle.airFilterId,
+                    oilId: parseInt(vehicle.oilId),
+                    tiresId: parseInt(vehicle.tiresId),
+                    airFilterId: parseInt(vehicle.airFilterId),
                     userId: vehicle.userId
                 })
                 .then(() => history.push("/"))
@@ -43,9 +43,9 @@ export const VehicleForm = () => {
                     model: vehicle.model,
                     year: vehicle.year,
                     startingMileage: vehicle.startingMileage,
-                    oilId: vehicle.oilId,
-                    tiresId: vehicle.tiresId,
-                    airFilterId: vehicle.airFilterId,
+                    oilId: parseInt(vehicle.oilId),
+                    tiresId: parseInt(vehicle.tiresId),
+                    airFilterId: parseInt(vehicle.airFilterId),
                     userId: parseInt(sessionStorage.getItem("miles_user"))
                 })
                 .then(() => history.push("/"))
@@ -126,11 +126,9 @@ export const VehicleForm = () => {
             
             <button className="btn btn-primary" 
                     disabled={isLoading} 
-                    onClick={event => {
-                    event.preventDefault() 
-                    handleControlledInputChange()
-            }}>
-                {vehicleId? "Update Vehicle" : "Add Vehicle"}
+                    onClick={handleSaveVehicle}
+                >
+                {vehicleId ? "Update Vehicle" : "Add Vehicle"}
             </button>
         </form>
     )

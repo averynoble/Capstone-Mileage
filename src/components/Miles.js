@@ -6,7 +6,7 @@ import { Login } from "./auth/Login";
 import { Register } from "./auth/Register";
 
 
-export const Miles = () => (
+export const Home = () => (
     <> 
         <Route
             render={() => {

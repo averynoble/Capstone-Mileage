@@ -47,7 +47,7 @@ export const VehicleProvider = (props) => {
 
     return (
         <VehicleContext.Provider value={{
-            vehicles,getVehicles, addVehicle, deleteVehicle, getVehicleById, updateVehicle
+            vehicles, getVehicles, addVehicle, deleteVehicle, getVehicleById, updateVehicle
         }}>
             {props.children}
         </VehicleContext.Provider>
