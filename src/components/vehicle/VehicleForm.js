@@ -1,11 +1,25 @@
 import React, {useContext, useEffect, useState} from "react"
 import { VehicleContext } from "./VehicleProvider"
 import { useHistory, useParams } from "react-router-dom"
+import { OilContext } from "../oil/OilProvider"
+import { AirFilterContext } from "../airFilter/AirFilterProvider"
+import { TireContext } from "../tires/TireProvider"
 
 export const VehicleForm = () => {
     const { addVehicle, getVehicleById, updateVehicle } = useContext(VehicleContext)
+    const { oils, getOils } = useContext(OilContext)
+    const { airFilters, getAirFilters } = useContext(AirFilterContext)
+    const { tires, getTires } = useContext(TireContext)
 
-    const [vehicle, setVehicle] = useState({})
+    const [vehicle, setVehicle] = useState({
+        make: "",
+        model: "",
+        year: 0,
+        odometerMileage: 0,
+        //oilId: 0,
+        //tiresId: 0,
+        //airFilterId: 0
+    });
 
     const [isLoading, setIsLoading] = useState(false)
     const {vehicleId} = useParams()
@@ -19,7 +33,12 @@ export const VehicleForm = () => {
         setVehicle(newVehicle)
     }
 
-    const handleSaveVehicle = () => {
+    const handleSaveVehicle = (event) => {
+        event.preventDefault()
+        const oilId = parseInt(vehicle.oilId)
+        const tireId = parseInt(vehicle.tiresId)
+        const airFilterId = parseInt(vehicle.airFilterId)
+
         if (vehicle.vehicleModel && vehicle.vehicleMake === null) {
             window.alert("Please fill out vehicle information")
         } else {
@@ -30,10 +49,10 @@ export const VehicleForm = () => {
                     make: vehicle.make,
                     model: vehicle.model,
                     year: vehicle.year,
-                    startingMileage: parseInt(vehicle.startingMileage),
-                    oilId: parseInt(vehicle.oilId),
-                    tiresId: parseInt(vehicle.tiresId),
-                    airFilterId: parseInt(vehicle.airFilterId),
+                    startingMileage: parseInt(vehicle.odometerMileage),
+                    oilId: oilId,
+                    tiresId: tireId,
+                    airFilterId: airFilterId,
                     userId: vehicle.userId
                 })
                 .then(() => history.push("/"))
@@ -42,10 +61,10 @@ export const VehicleForm = () => {
                     make: vehicle.make,
                     model: vehicle.model,
                     year: vehicle.year,
-                    startingMileage: parseInt(vehicle.startingMileage),
-                    oilId: parseInt(vehicle.oilId),
-                    tiresId: parseInt(vehicle.tiresId),
-                    airFilterId: parseInt(vehicle.airFilterId),
+                    startingMileage: parseInt(vehicle.odometerMileage),
+                    oilId: oilId,
+                    tiresId: tireId,
+                    airFilterId: airFilterId,
                     userId: parseInt(sessionStorage.getItem("miles_user"))
                 })
                 .then(() => history.push("/"))
@@ -54,7 +73,12 @@ export const VehicleForm = () => {
     }
 
     useEffect(() => {
-        if(vehicleId) {
+        getOils()
+        .then(getTires)
+        .then(getAirFilters)
+        .then(() => {
+            
+            if(vehicleId) {
             getVehicleById(vehicleId)
             .then(vehicle => {
                 setVehicle(vehicle)
@@ -62,7 +86,8 @@ export const VehicleForm = () => {
             })
         }   else {
             setIsLoading(false)
-        }
+            }
+        })
     }, [])
 
     return (
@@ -96,31 +121,63 @@ export const VehicleForm = () => {
                 <div className="form-group">
                     <label htmlFor="startingMileage">Starting Mileage:</label>
                     <input type="number" id="startingMileage" required autoFocus className="form-control"
-                    onChange={handleControlledInputChange} value={vehicle.startingMileage} />
+                    onChange={handleControlledInputChange} value={vehicle.odometerMileage} />
                 </div>
             </fieldset>
 
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="oilId">Oil:</label>
-                    <input type="text" id="oilId" required autoFocus className="form-control"
-                    onChange={handleControlledInputChange} value={vehicle.oilId} />
+                    <select name="oilId" id="oilId" className="form-control" onChange={handleControlledInputChange} value={vehicle.oilId}>
+                        <option value="0">Select a Oil Type</option>
+                        {oils.map(o => (
+                            <option key={o.id} value={o.id}>
+                                {o.brand}
+                            </option>
+                        ))}
+                    </select>
                 </div>
             </fieldset>
 
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="tiresId">Tires:</label>
-                    <input type="text" id="tiresId" required autoFocus className="form-control"
-                    onChange={handleControlledInputChange} value={vehicle.tiresId} />
+                    <select type="text" id="tiresId" required autoFocus className="form-control"onChange={handleControlledInputChange} value={vehicle.tiresId}> 
+                            <option value="0"> Select a Tire</option>
+                            {
+                                tires.map(t => (
+                                    <option key={t.id} value={t.id}>
+                                        {t.brand}
+                                    </option>
+                                ))
+                            }
+                    </select>
+                    <select type="text" id="tiresId" required autoFocus className="form-control" onChange={handleControlledInputChange} value={vehicle.tiresId}>
+                        <option value="0" placeholder="Installed Mileage"></option>
+                            {
+                                tires.map(t => (
+                                    <option key={t.id} value={t.id}>
+                                        {t.thresholdMileage}
+                                    </option>
+                                ))
+                            }
+                    </select>
                 </div>
             </fieldset>
 
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="airFilterId">Air Filter:</label>
-                    <input type="text" id="airFilterId" required autoFocus className="form-control"
-                    onChange={handleControlledInputChange} value={vehicle.airFilterId} />
+                    <select type="text" id="airFilterId" required autoFocus className="form-control"onChange={handleControlledInputChange} value={vehicle.airFilterId}> 
+                            <option value="0">Select a Air Filter</option>
+                            {
+                                airFilters.map(a => (
+                                    <option key={a.id} value={a.id}>
+                                        {a.brand}
+                                    </option>
+                                ))
+                            }
+                    </select>
                 </div>
             </fieldset>
             

@@ -5,7 +5,7 @@ export const TireProvider = (props) => {
     const [tires, setTires] = useState([])
 
     const getTires = () => {
-        return fetch("http://localhost:8088/tires?_expand=name")
+        return fetch("http://localhost:8088/tires?_expand=brand")
         .then(res => res.json())
         .then(setTires)
     }

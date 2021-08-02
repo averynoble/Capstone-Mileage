@@ -21,18 +21,18 @@ export const ApplicationViews = () => {
                             <OilProvider>
                                 <Route exact path="/">
                                     <VehicleList /> {/*Renders users home page with created vehicles*/}
-                                </Route> 
+                                </Route>
+
+                                <Route exact path="/vehicles/create">
+                                    <VehicleForm />
+                                </Route>
+
+                                <Route exact path="/vehicles/edit/:vehicleId(\d+)">
+                                    <VehicleForm />
+                                </Route>
                             </OilProvider>
                         </AirFilterProvider>
                     </TireProvider>
-
-                    <Route exact path="/vehicles/create">
-                        <VehicleForm />
-                    </Route>
-
-                    <Route exact path="/vehicles/edit/:vehicleId(\d+)">
-                        <VehicleForm />
-                    </Route>
                 </VehicleProvider>
             }
         </>

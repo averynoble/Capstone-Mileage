@@ -5,7 +5,7 @@ export const AirFilterProvider = (props) => {
     const [airFilters, setAirFilters] = useState([])
 
     const getAirFilters = () => {
-        return fetch("http://localhost:8088/airFilters?_expand=name")
+        return fetch("http://localhost:8088/airFilters?_expand=brand")
         .then(res => res.json())
         .then(setAirFilters)
     }

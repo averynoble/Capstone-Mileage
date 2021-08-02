@@ -5,7 +5,7 @@ export const OilProvider = (props) => {
     const [oils, setOils] = useState([])
 
     const getOils = () => {
-        return fetch("http://localhost:8088/oils?_expand=name")
+        return fetch("http://localhost:8088/oils?_expand=brand")
         .then(res => res.json())
         .then(setOils)
     }

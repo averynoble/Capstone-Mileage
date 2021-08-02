@@ -32,7 +32,7 @@ export const VehicleList = () => {
                     vehicles.map(vehicle => {
 
                         const oilLevel = oils.find(o => o.id === vehicle.oilId)
-                        const tire = tires.find(t => t.id === vehicle.tiresId)
+                        const tire = tires.find(tire => tire.id === vehicle.tiresId)
                         const filter = airFilters.find(f => f.id === vehicle.airFilterId) 
 
                         return <VehicleCard key={vehicle.id} 
