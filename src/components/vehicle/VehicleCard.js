@@ -11,6 +11,8 @@ export const VehicleCard = ({ vehicle, oil, tire, airFilter }) => {
     let [newMileage, setNewMileage] = useState(vehicle.odometerMileage)
 
     let [oilMilesDif, setOilMilesDif] = useState(0)
+    let [tireMilesDif, setTireMilesDif] = useState(0)
+    let [airFilterMilesDif, setAirFilterMilesDif] = useState(0)
 
     const vehicleDelete = () => {
         deleteVehicle(vehicle.id)
@@ -29,10 +31,18 @@ export const VehicleCard = ({ vehicle, oil, tire, airFilter }) => {
         const differenceMiles = vehicle.odometerMileage - part.installMileage
         //differenceMiles >= part.thresholdMileage
         setOilMilesDif(oil.thresholdMileage - differenceMiles) 
+        setTireMilesDif(tire.thresholdMileage - differenceMiles)
+        setAirFilterMilesDif(airFilter.thresholdMileage - differenceMile)
+
+        if(differenceMiles >= part.thresholdMileage) {
+            window.alert(`${part.brand} Needs to be changed!`)
+        }
     }
 
     useEffect(() => {
         milesToNextChange(oil)
+        milesToNextChange(tire)
+        milesToNextChange(airFilter)
     }, [vehicle])
 
     return (
@@ -66,7 +76,7 @@ export const VehicleCard = ({ vehicle, oil, tire, airFilter }) => {
                     <div>
                         <div className="vehicle__tiresId">Tire Brand: {tire.brand}</div> 
                         <div className="vehicle__tireInstallMileage">Mileage Installed: {tire.installMileage}</div> 
-                        <div className="vehicle__tireThresholdMileage">Miles till next change: {tire.thresholdMileage}</div>
+                        <div className="vehicle__tireThresholdMileage">Miles till next change: {tireMilesDif}</div>
                     </div>
                 )
                 }
@@ -77,7 +87,7 @@ export const VehicleCard = ({ vehicle, oil, tire, airFilter }) => {
                     <div>
                         <div className="vehicle__airFilterId">Air Filter Brand: {airFilter.brand}</div> 
                         <div className="vehicle__airFilterInstallMileage">Mileage Installed: {airFilter.installMileage}</div> 
-                        <div className="vehicle__airFilterThresholdMileage">Miles till next change: {airFilter.thresholdMileage}</div>
+                        <div className="vehicle__airFilterThresholdMileage">Miles till next change: {airFilterMilesDif}</div>
                     </div>
                 )}
             </div>
