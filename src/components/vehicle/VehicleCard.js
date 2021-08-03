@@ -97,6 +97,8 @@ export const VehicleCard = ({ vehicle, oil, tire, airFilter }) => {
                             airFilter.installMileage = vehicle.odometerMileage
                             setAirFilterMilesDif(event.target.value)
                             milesToNextChange(airFilterMilesDif)
+                            console.log(airFilterMilesDif)
+                            debugger
                         })}>Change Air Filter</button></div>
                         <div className="vehicle__airFilterInstallMileage">Mileage Installed: {airFilter.installMileage}</div> 
                         <div className="vehicle__airFilterThresholdMileage">Miles till next change: {airFilterMilesDif}</div>
