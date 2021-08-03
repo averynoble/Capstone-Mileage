@@ -49,7 +49,7 @@ export const VehicleForm = () => {
                     make: vehicle.make,
                     model: vehicle.model,
                     year: vehicle.year,
-                    startingMileage: parseInt(vehicle.odometerMileage),
+                    odometerMileage: parseInt(vehicle.odometerMileage),
                     oilId: oilId,
                     tiresId: tireId,
                     airFilterId: airFilterId,
@@ -61,7 +61,7 @@ export const VehicleForm = () => {
                     make: vehicle.make,
                     model: vehicle.model,
                     year: vehicle.year,
-                    startingMileage: parseInt(vehicle.odometerMileage),
+                    odometerMileage: parseInt(vehicle.odometerMileage),
                     oilId: oilId,
                     tiresId: tireId,
                     airFilterId: airFilterId,
@@ -95,7 +95,7 @@ export const VehicleForm = () => {
             <h2 className="vehicleForm__title">New Vehicle</h2>
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="make">Make:</label>
+                    <label htmlFor="make">Make: </label>
                     <input type="text" id="make" required autoFocus className="form-control" placeholder="Vehicle Make"
                     onChange={handleControlledInputChange} value={vehicle.make} />
                 </div>
@@ -103,7 +103,7 @@ export const VehicleForm = () => {
 
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="model">Model:</label>
+                    <label htmlFor="model">Model: </label>
                     <input type="text" id="model" required autoFocus className="form-control" placeholder="Vehicle Model"
                     onChange={handleControlledInputChange} value={vehicle.model} />
                 </div>
@@ -111,7 +111,7 @@ export const VehicleForm = () => {
 
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="year">Year:</label>
+                    <label htmlFor="year">Year: </label>
                     <input type="number" id="year" required autoFocus className="form-control" placeholder="Vehicle Year"
                     onChange={handleControlledInputChange} value={vehicle.year} />
                 </div>
@@ -119,15 +119,15 @@ export const VehicleForm = () => {
 
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="startingMileage">Starting Mileage:</label>
-                    <input type="number" id="startingMileage" required autoFocus className="form-control"
+                    <label htmlFor="odometerMileage">Odometer Mileage: </label>
+                    <input type="number" id="odometerMileage" required autoFocus className="form-control"
                     onChange={handleControlledInputChange} value={vehicle.odometerMileage} />
                 </div>
             </fieldset>
 
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="oilId">Oil:</label>
+                    <label htmlFor="oilId">Oil: </label>
                     <select name="oilId" id="oilId" className="form-control" onChange={handleControlledInputChange} value={vehicle.oilId}>
                         <option value="0">Select a Oil Type</option>
                         {oils.map(o => (
@@ -137,11 +137,16 @@ export const VehicleForm = () => {
                         ))}
                     </select>
                 </div>
+
+                <div className="form-group">
+                    <label htmlFor="oilInstallMileage"> Odometer Reading when installed: </label>
+                    <input className="number" id="installMileage" className="form-control" onChange={handleControlledInputChange} value={vehicle.oil?.installMileage} />
+                </div>
             </fieldset>
 
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="tiresId">Tires:</label>
+                    <label htmlFor="tiresId">Tires: </label>
                     <select type="text" id="tiresId" required autoFocus className="form-control"onChange={handleControlledInputChange} value={vehicle.tiresId}> 
                             <option value="0"> Select a Tire</option>
                             {
@@ -152,22 +157,17 @@ export const VehicleForm = () => {
                                 ))
                             }
                     </select>
-                    <select type="text" id="tiresId" required autoFocus className="form-control" onChange={handleControlledInputChange} value={vehicle.tiresId}>
-                        <option value="0" placeholder="Installed Mileage"></option>
-                            {
-                                tires.map(t => (
-                                    <option key={t.id} value={t.id}>
-                                        {t.thresholdMileage}
-                                    </option>
-                                ))
-                            }
-                    </select>
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="tiresInstallMileage"> Odometer Reading when installed: </label>
+                    <input className="number" id="installMileage" className="form-control" onChange={handleControlledInputChange} value={vehicle.tires?.installMileage} />
                 </div>
             </fieldset>
 
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="airFilterId">Air Filter:</label>
+                    <label htmlFor="airFilterId">Air Filter: </label>
                     <select type="text" id="airFilterId" required autoFocus className="form-control"onChange={handleControlledInputChange} value={vehicle.airFilterId}> 
                             <option value="0">Select a Air Filter</option>
                             {
@@ -178,6 +178,11 @@ export const VehicleForm = () => {
                                 ))
                             }
                     </select>
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="airFilterInstallMileage"> Odometer Reading when installed: </label>
+                    <input className="number" id="installMileage" className="form-control" onChange={handleControlledInputChange} value={vehicle.airFilters?.installMileage} />
                 </div>
             </fieldset>
             

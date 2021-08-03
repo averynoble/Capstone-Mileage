@@ -32,10 +32,10 @@ export const VehicleCard = ({ vehicle, oil, tire, airFilter }) => {
         //differenceMiles >= part.thresholdMileage
         setOilMilesDif(oil.thresholdMileage - differenceMiles) 
         setTireMilesDif(tire.thresholdMileage - differenceMiles)
-        setAirFilterMilesDif(airFilter.thresholdMileage - differenceMile)
+        setAirFilterMilesDif(airFilter.thresholdMileage - differenceMiles)
 
-        if(differenceMiles >= part.thresholdMileage) {
-            window.alert(`${part.brand} Needs to be changed!`)
+        if (differenceMiles >= part.thresholdMileage) {
+            window.alert(`${part.brand} Needs to be changed`)
         }
     }
 
@@ -43,7 +43,7 @@ export const VehicleCard = ({ vehicle, oil, tire, airFilter }) => {
         milesToNextChange(oil)
         milesToNextChange(tire)
         milesToNextChange(airFilter)
-    }, [vehicle])
+    }, [vehicle, oil, tire, airFilter])
 
     return (
         <section className="vehicle">
@@ -63,8 +63,12 @@ export const VehicleCard = ({ vehicle, oil, tire, airFilter }) => {
             <div className="oil"><h4>Oil</h4>
                 { oil && (
                     <div>
-                        <div className="vehicle__oilId">Oil: {oil.brand}</div> 
-                        <div className="vehicle__oilInstallMileage">Mileage when changed: {oil.installMileage}</div> 
+                        <div className="vehicle__oilId">Oil: {oil.brand}<button onClick={((event) => {
+                            oil.installMileage = vehicle.odometerMileage
+                            setOilMilesDif(event.target.value)
+                            milesToNextChange(oilMilesDif)
+                        })}>Changed Oil</button></div> 
+                        <div className="vehicle__oilInstallMileage">Mileage Installed: {oil.installMileage}</div> 
                         <div className="vehicle__oilThresholdMileage">Miles till next change: {oilMilesDif}</div>
                     </div>
                     )     
@@ -74,7 +78,11 @@ export const VehicleCard = ({ vehicle, oil, tire, airFilter }) => {
             <div className="tires"><h4>Tires</h4>
                 { tire && (
                     <div>
-                        <div className="vehicle__tiresId">Tire Brand: {tire.brand}</div> 
+                        <div className="vehicle__tiresId">Tire Brand: {tire.brand}<button onClick={((event) => {
+                            tire.installMileage = vehicle.odometerMileage
+                            setTireMilesDif(event.target.value)
+                            milesToNextChange(tireMilesDif)
+                        })}>Changed Tires</button></div> 
                         <div className="vehicle__tireInstallMileage">Mileage Installed: {tire.installMileage}</div> 
                         <div className="vehicle__tireThresholdMileage">Miles till next change: {tireMilesDif}</div>
                     </div>
@@ -85,13 +93,16 @@ export const VehicleCard = ({ vehicle, oil, tire, airFilter }) => {
             <div className="air_filter"><h4>Air Filter</h4>
                 { airFilter && (
                     <div>
-                        <div className="vehicle__airFilterId">Air Filter Brand: {airFilter.brand}</div> 
+                        <div className="vehicle__airFilterId">Air Filter Brand: {airFilter.brand}<button onClick={((event) => {
+                            airFilter.installMileage = vehicle.odometerMileage
+                            setAirFilterMilesDif(event.target.value)
+                            milesToNextChange(airFilterMilesDif)
+                        })}>Change Air Filter</button></div>
                         <div className="vehicle__airFilterInstallMileage">Mileage Installed: {airFilter.installMileage}</div> 
                         <div className="vehicle__airFilterThresholdMileage">Miles till next change: {airFilterMilesDif}</div>
                     </div>
                 )}
             </div>
-
             <button onClick={vehicleDelete}>Delete Vehicle</button>
             <button onClick={() => {
                 history.push(`/vehicles/edit/${vehicle.id}`)
