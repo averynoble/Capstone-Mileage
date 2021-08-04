@@ -33,22 +33,27 @@ export const VehicleCard = ({ vehicle, oil, tire, airFilter }) => {
         switch (part.brand) {
             case oil.brand:
                 setOilMilesDif(oil.thresholdMileage - differenceMiles);
+                if (differenceMiles >= oil.thresholdMileage){
+                    window.alert(`${oil.brand} Needs to be changed`)
+                };
                 break;
             case tire.brand:
                 setTireMilesDif(tire.thresholdMileage - differenceMiles);
+                if (differenceMiles >= tire.thresholdMileage) {
+                    window.alert(`${tire.brand} Needs to be changed`);
+                };
                 break;
             case airFilter.brand:
                 setAirFilterMilesDif(airFilter.thresholdMileage - differenceMiles);
+                if (differenceMiles >= airFilter.thresholdMileage) {
+                    window.alert(`${airFilter.brand} Needs to be changed`);
+                };
                 break;
             default:
                 console.log(part);
         }
-
-        if (differenceMiles >= part.thresholdMileage) {
-            window.alert(`${part.brand} Needs to be changed`)
-        }
     }
-
+    
     useEffect(() => {
         milesToNextChange(oil)
         milesToNextChange(tire)

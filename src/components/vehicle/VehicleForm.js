@@ -19,6 +19,9 @@ export const VehicleForm = () => {
         //oilId: 0,
         //tiresId: 0,
         //airFilterId: 0
+        oilInstallMileage: 0,
+        tireInstallMileage: 0,
+        airFilterInstallMileage: 0
     });
 
     const [isLoading, setIsLoading] = useState(false)
@@ -63,8 +66,11 @@ export const VehicleForm = () => {
                     year: vehicle.year,
                     odometerMileage: parseInt(vehicle.odometerMileage),
                     oilId: oilId,
+                    oilInstallMileage: parseInt(vehicle.oilInstallMileage),
                     tiresId: tireId,
+                    tireInstallMileage: parseInt(vehicle.tireInstallMileage),
                     airFilterId: airFilterId,
+                    airFilterInstallMileage: parseInt(vehicle.airFilterInstallMileage),
                     userId: parseInt(sessionStorage.getItem("miles_user"))
                 })
                 .then(() => history.push("/"))
@@ -140,7 +146,7 @@ export const VehicleForm = () => {
 
                 <div className="form-group">
                     <label htmlFor="oilInstallMileage"> Odometer Reading when installed: </label>
-                    <input className="number" id="installMileage" className="form-control" onChange={handleControlledInputChange} value={vehicle.oil?.installMileage} />
+                    <input className="number" id="oilInstallMileage" className="form-control" onChange={handleControlledInputChange} value={vehicle.oilInstallMileage} />
                 </div>
             </fieldset>
 
@@ -161,7 +167,7 @@ export const VehicleForm = () => {
 
                 <div className="form-group">
                     <label htmlFor="tiresInstallMileage"> Odometer Reading when installed: </label>
-                    <input className="number" id="installMileage" className="form-control" onChange={handleControlledInputChange} value={vehicle.tires?.installMileage} />
+                    <input className="number" id="tireInstallMileage" className="form-control" onChange={handleControlledInputChange} value={vehicle.tireInstallMileage} />
                 </div>
             </fieldset>
 
@@ -182,7 +188,7 @@ export const VehicleForm = () => {
 
                 <div className="form-group">
                     <label htmlFor="airFilterInstallMileage"> Odometer Reading when installed: </label>
-                    <input className="number" id="installMileage" className="form-control" onChange={handleControlledInputChange} value={vehicle.airFilters?.installMileage} />
+                    <input className="number" id="airFilterInstallMileage" className="form-control" onChange={handleControlledInputChange} value={vehicle.airFilterInstallMileage} />
                 </div>
             </fieldset>
             

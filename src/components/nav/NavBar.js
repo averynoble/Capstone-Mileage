@@ -10,11 +10,7 @@ export const NavBar = (props) => {
                 </li>
 
                 <li className="navbar__item">
-                    <Link className="navbar__link" to="/friends">Find Users</Link>
-                </li>
-
-                <li className="navbar__item">
-                    <Link className="navbar__link" to="/logout">Logout</Link>
+                    <Link className="navbar__link" to="/login" onClick={() => sessionStorage.removeItem("miles_user")}>Logout</Link>
                 </li>
             </ul>
         </nav>
