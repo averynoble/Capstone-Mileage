@@ -29,10 +29,20 @@ export const VehicleCard = ({ vehicle, oil, tire, airFilter }) => {
 
     const milesToNextChange = (part) => {
         const differenceMiles = vehicle.odometerMileage - part.installMileage
-        //differenceMiles >= part.thresholdMileage
-        setOilMilesDif(oil.thresholdMileage - differenceMiles) 
-        setTireMilesDif(tire.thresholdMileage - differenceMiles)
-        setAirFilterMilesDif(airFilter.thresholdMileage - differenceMiles)
+
+        switch (part.brand) {
+            case oil.brand:
+                setOilMilesDif(oil.thresholdMileage - differenceMiles);
+                break;
+            case tire.brand:
+                setTireMilesDif(tire.thresholdMileage - differenceMiles);
+                break;
+            case airFilter.brand:
+                setAirFilterMilesDif(airFilter.thresholdMileage - differenceMiles);
+                break;
+            default:
+                console.log(part);
+        }
 
         if (differenceMiles >= part.thresholdMileage) {
             window.alert(`${part.brand} Needs to be changed`)
@@ -65,8 +75,7 @@ export const VehicleCard = ({ vehicle, oil, tire, airFilter }) => {
                     <div>
                         <div className="vehicle__oilId">Oil: {oil.brand}<button onClick={((event) => {
                             oil.installMileage = vehicle.odometerMileage
-                            setOilMilesDif(event.target.value)
-                            milesToNextChange(oilMilesDif)
+                            milesToNextChange(oil)
                         })}>Changed Oil</button></div> 
                         <div className="vehicle__oilInstallMileage">Mileage Installed: {oil.installMileage}</div> 
                         <div className="vehicle__oilThresholdMileage">Miles till next change: {oilMilesDif}</div>
@@ -80,8 +89,7 @@ export const VehicleCard = ({ vehicle, oil, tire, airFilter }) => {
                     <div>
                         <div className="vehicle__tiresId">Tire Brand: {tire.brand}<button onClick={((event) => {
                             tire.installMileage = vehicle.odometerMileage
-                            setTireMilesDif(event.target.value)
-                            milesToNextChange(tireMilesDif)
+                            milesToNextChange(tire)
                         })}>Changed Tires</button></div> 
                         <div className="vehicle__tireInstallMileage">Mileage Installed: {tire.installMileage}</div> 
                         <div className="vehicle__tireThresholdMileage">Miles till next change: {tireMilesDif}</div>
@@ -95,10 +103,7 @@ export const VehicleCard = ({ vehicle, oil, tire, airFilter }) => {
                     <div>
                         <div className="vehicle__airFilterId">Air Filter Brand: {airFilter.brand}<button onClick={((event) => {
                             airFilter.installMileage = vehicle.odometerMileage
-                            setAirFilterMilesDif(event.target.value)
-                            milesToNextChange(airFilterMilesDif)
-                            console.log(airFilterMilesDif)
-                            debugger
+                            milesToNextChange(airFilter)
                         })}>Change Air Filter</button></div>
                         <div className="vehicle__airFilterInstallMileage">Mileage Installed: {airFilter.installMileage}</div> 
                         <div className="vehicle__airFilterThresholdMileage">Miles till next change: {airFilterMilesDif}</div>
