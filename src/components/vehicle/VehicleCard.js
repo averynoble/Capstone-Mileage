@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react"
 import { useHistory } from "react-router-dom"
 import { VehicleContext } from "./VehicleProvider"
+import "../style/stylesheet.css"
 
 export const VehicleCard = ({ vehicle, oil, tire, airFilter }) => {
     const { deleteVehicle, updateVehicle } = useContext(VehicleContext)
@@ -34,7 +35,8 @@ export const VehicleCard = ({ vehicle, oil, tire, airFilter }) => {
             case oil.brand:
                 differenceMiles = vehicle.odometerMileage - vehicle.oilInstallMileage
                 setOilMilesDif(oil.thresholdMileage - differenceMiles);
-                if (differenceMiles >= oil.thresholdMileage){
+                if (differenceMiles >= oil.thresholdMileage) {
+                    
                 };
                 break;
             case tire.brand:
@@ -71,14 +73,14 @@ export const VehicleCard = ({ vehicle, oil, tire, airFilter }) => {
             })}></input><button onClick={vehicleMileageUpdate}>Save</button></div>
             : <button onClick={(() => {
                 setShowMileageForm(true)
-            })} className="addMiles">add miles</button>
+            })} className="addMiles">Add Miles</button>
             }
             
             
             <div className="oil"><h4>Oil</h4>
                 { oil && (
                     <div>
-                        <div className="vehicle__oilId">Oil: {oil.brand}<button onClick={((event) => {
+                        <div className="vehicle__oilId">Oil: {oil.brand} <button onClick={((event) => {
                            vehicle.oilInstallMileage = vehicle.odometerMileage
                             milesToNextChange(oil)
                             updateVehicle(vehicle)
@@ -93,7 +95,7 @@ export const VehicleCard = ({ vehicle, oil, tire, airFilter }) => {
             <div className="tires"><h4>Tires</h4>
                 { tire && (
                     <div>
-                        <div className="vehicle__tiresId">Tire Brand: {tire.brand}<button onClick={((event) => {
+                        <div className="vehicle__tiresId">Tire Brand: {tire.brand} <button onClick={((event) => {
                             vehicle.tireInstallMileage = vehicle.odometerMileage
                             milesToNextChange(tire)
                             updateVehicle(vehicle)
@@ -108,11 +110,11 @@ export const VehicleCard = ({ vehicle, oil, tire, airFilter }) => {
             <div className="air_filter"><h4>Air Filter</h4>
                 { airFilter && (
                     <div>
-                        <div className="vehicle__airFilterId">Air Filter Brand: {airFilter.brand}<button onClick={((event) => {
+                        <div className="vehicle__airFilterId">Air Filter Brand: {airFilter.brand} <button onClick={((event) => {
                             vehicle.airFilterInstallMileage = vehicle.odometerMileage
                             milesToNextChange(airFilter)
                             updateVehicle(vehicle)
-                        })}>Change Air Filter</button></div>
+                        })}>Changed Air Filter</button></div>
                         <div className="vehicle__airFilterInstallMileage">Mileage Installed: {vehicle.airFilterInstallMileage}</div> 
                         <div className="vehicle__airFilterThresholdMileage">Miles till next change: {airFilterMilesDif}</div>
                     </div>
