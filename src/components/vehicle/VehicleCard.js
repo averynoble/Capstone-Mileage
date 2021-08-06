@@ -7,6 +7,10 @@ export const VehicleCard = ({ vehicle, oil, tire, airFilter }) => {
     const { deleteVehicle, updateVehicle } = useContext(VehicleContext)
     const history = useHistory()
 
+    let [showOilChange, setShowOilChange] = useState(false)
+    let [showTireChange, setShowTireChange] = useState(false)
+    let [showAirFilterChange, setShowAirFilterChange] = useState(false)
+
     let [showMileageForm, setShowMileageForm] = useState(false)
 
     let [newMileage, setNewMileage] = useState(vehicle.odometerMileage)
@@ -36,19 +40,21 @@ export const VehicleCard = ({ vehicle, oil, tire, airFilter }) => {
                 differenceMiles = vehicle.odometerMileage - vehicle.oilInstallMileage
                 setOilMilesDif(oil.thresholdMileage - differenceMiles);
                 if (differenceMiles >= oil.thresholdMileage) {
-                    
+                    setShowOilChange(true)
                 };
                 break;
             case tire.brand:
                 differenceMiles = vehicle.odometerMileage - vehicle.tireInstallMileage
                 setTireMilesDif(tire.thresholdMileage - differenceMiles);
                 if (differenceMiles >= tire.thresholdMileage) {
+                    setShowTireChange(true)
                 };
                 break;
             case airFilter.brand:
                 differenceMiles = vehicle.odometerMileage - vehicle.airFilterInstallMileage
                 setAirFilterMilesDif(airFilter.thresholdMileage - differenceMiles);
                 if (differenceMiles >= airFilter.thresholdMileage) {
+                    setShowAirFilterChange(true)
                 };
                 break;
             default:
@@ -86,7 +92,7 @@ export const VehicleCard = ({ vehicle, oil, tire, airFilter }) => {
                             updateVehicle(vehicle)
                         })}>Changed Oil</button></div> 
                         <div className="vehicle__oilInstallMileage">Mileage Installed: {vehicle.oilInstallMileage}</div> 
-                        <div className="vehicle__oilThresholdMileage">Miles till next change: {oilMilesDif}</div>
+                        <div className={`"vehicle__oilThresholdMileage ${showOilChange ? "highlight" : ""}`}>Miles till next change: {oilMilesDif}</div>
                     </div>
                     )     
                 }
@@ -101,7 +107,7 @@ export const VehicleCard = ({ vehicle, oil, tire, airFilter }) => {
                             updateVehicle(vehicle)
                         })}>Changed Tires</button></div> 
                         <div className="vehicle__tireInstallMileage">Mileage Installed: {vehicle.tireInstallMileage}</div> 
-                        <div className="vehicle__tireThresholdMileage">Miles till next change: {tireMilesDif}</div>
+                        <div className={`"vehicle__tireThresholdMileage ${showTireChange ? "highlight" : ""}`}>Miles till next change: {tireMilesDif}</div>
                     </div>
                 )
                 }
@@ -116,7 +122,7 @@ export const VehicleCard = ({ vehicle, oil, tire, airFilter }) => {
                             updateVehicle(vehicle)
                         })}>Changed Air Filter</button></div>
                         <div className="vehicle__airFilterInstallMileage">Mileage Installed: {vehicle.airFilterInstallMileage}</div> 
-                        <div className="vehicle__airFilterThresholdMileage">Miles till next change: {airFilterMilesDif}</div>
+                        <div className={`"vehicle__airFilterThresholdMileage ${showAirFilterChange ? "highlight" : ""}`}>Miles till next change: {airFilterMilesDif}</div>
                     </div>
                 )}
             </div>

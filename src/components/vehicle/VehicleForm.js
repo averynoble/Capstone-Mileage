@@ -54,8 +54,11 @@ export const VehicleForm = () => {
                     year: vehicle.year,
                     odometerMileage: parseInt(vehicle.odometerMileage),
                     oilId: oilId,
+                    oilInstallMileage: parseInt(vehicle.oilInstallMileage),
                     tiresId: tireId,
+                    tireInstallMileage: parseInt(vehicle.tireInstallMileage),
                     airFilterId: airFilterId,
+                    airFilterInstallMileage: parseInt(vehicle.airFilterInstallMileage),
                     userId: vehicle.userId
                 })
                 .then(() => history.push("/"))
@@ -98,7 +101,7 @@ export const VehicleForm = () => {
 
     return (
         <form className="vehicleForm">
-            <h2 className="vehicleForm__title">New Vehicle</h2>
+            <h2 className="vehicleForm__title">{vehicleId ? "Edit Vehicle" : "New Vehicle"}</h2>
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="make">Make: </label>
