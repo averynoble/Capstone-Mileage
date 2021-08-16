@@ -3,11 +3,14 @@
     flex-direction: row;
     flex-flow: column;
  }
+ .vehicles {
+     display: flex;
+ }
  .vehicle {
     display: flex;
     flex-direction: column;
     padding: 20px;
-    background-color: rgb(206, 220, 233);
+    background-color: rgb(116, 136, 131);
     margin: 10px;
 }
 h4 {
