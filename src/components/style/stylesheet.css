@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: row;
     flex-flow: column;
+    background-color: rgb(212, 226, 243);
  }
  .vehicles {
      display: flex;
@@ -10,12 +11,63 @@
     display: flex;
     flex-direction: column;
     padding: 20px;
-    background-color: rgb(116, 136, 131);
+    background-color: #f0f8ff;
     margin: 10px;
+    border: 3px solid black;
+}
+h2 {
+    font-size: 25px;
+    text-align: center;
 }
 h4 {
     text-align: center;
+    font-size: 16px;
+    font-style: italic;
 }
 .highlight {
     color: red;
+}
+.delete > button {
+    background-color: maroon;
+}
+.edit > button {
+    background-color: black;
+}
+.addMiles > button {
+    background-color: green;
+}
+
+.vehicleForm {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-self: auto;
+    align-content: space-around;
+    margin: 10px;
+}
+fieldset {
+    margin: 10px;
+}
+
+ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+li {
+    justify-content: space-around;
+    list-style-type: none;
+}
+h1 {
+    text-align: center;
+    font-size: 25px;
+
+}
+h2 {
+    text-align: justify;
+}
+label {
+    font-size: 18px;
+    padding: 8px;
 }

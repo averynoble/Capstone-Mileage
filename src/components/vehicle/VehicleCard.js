@@ -1,8 +1,18 @@
 import React, { useContext, useEffect, useState } from "react"
 import { useHistory } from "react-router-dom"
 import { VehicleContext } from "./VehicleProvider"
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import "../style/stylesheet.css"
 
+const useStyles = makeStyles((theme) => ({
+    root: {
+      '& > *': {
+        margin: theme.spacing(1),
+      },
+    },
+  }));
+  
 export const VehicleCard = ({ vehicle, oil, tire, airFilter }) => {
     const { deleteVehicle, updateVehicle } = useContext(VehicleContext)
     const history = useHistory()
@@ -68,18 +78,24 @@ export const VehicleCard = ({ vehicle, oil, tire, airFilter }) => {
         milesToNextChange(airFilter)
     }, [vehicle, oil, tire, airFilter])
 
+    const classes = useStyles();
+
     return (
         <section className="vehicle">
             <div className="vehicle__make">Make: {vehicle.make}</div>
             <div className="vehicle__model">Model: {vehicle.model}</div>
             <div className="vehicle__year">Production Year: {vehicle.year}</div>
             <div className="vehicle__odometerMileage">Odometer: {vehicle.odometerMileage}</div>
-            { showMileageForm ? <div><input type="text" id="addedMiles" onChange={((event) => {
-                setNewMileage(event.target.value)
-            })}></input><button onClick={vehicleMileageUpdate}>Save</button></div>
-            : <button onClick={(() => {
-                setShowMileageForm(true)
-            })} className="addMiles">Add Miles</button>
+            { showMileageForm ? 
+                <div>
+                    <input type="text" id="addedMiles" onChange={((event) => {
+                        setNewMileage(event.target.value)})}>
+                    </input>
+                    <div className={classes.root}><Button variant="contained" color="primary" onClick={vehicleMileageUpdate}>Save</Button></div>
+                </div>:   
+                <div className={classes.root}>
+                    <Button variant="contained" color="primary" onClick={(() => { setShowMileageForm(true) })} className="addMiles">Add Miles</Button>
+                </div>
             }
             
             
@@ -126,11 +142,16 @@ export const VehicleCard = ({ vehicle, oil, tire, airFilter }) => {
                     </div>
                 )}
             </div>
-            <button onClick={vehicleDelete}>Delete Vehicle</button>
-            <button onClick={() => {
-                history.push(`/vehicles/edit/${vehicle.id}`)
-            }}>Edit 
-            </button>
+
+            <div className={classes.root} className="delete">
+                <Button variant="contained" color="primary" onClick={vehicleDelete}>Delete Vehicle</Button>
+            </div>
+
+            <div className={classes.root} className="edit">
+                <Button variant="contained" color="primary" onClick={() => {
+                history.push(`/vehicles/edit/${vehicle.id}`)}}>Edit Vehicle
+                </Button>
+            </div>
         </section>
     )
 }

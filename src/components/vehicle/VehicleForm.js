@@ -4,6 +4,17 @@ import { useHistory, useParams } from "react-router-dom"
 import { OilContext } from "../oil/OilProvider"
 import { AirFilterContext } from "../airFilter/AirFilterProvider"
 import { TireContext } from "../tires/TireProvider"
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import "../style/stylesheet.css"
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      '& > *': {
+        margin: theme.spacing(1),
+      },
+    },
+  }));
 
 export const VehicleForm = () => {
     const { addVehicle, getVehicleById, updateVehicle } = useContext(VehicleContext)
@@ -11,6 +22,7 @@ export const VehicleForm = () => {
     const { airFilters, getAirFilters } = useContext(AirFilterContext)
     const { tires, getTires } = useContext(TireContext)
 
+    const classes = useStyles();
     const [vehicle, setVehicle] = useState({
         make: "",
         model: "",
@@ -195,12 +207,11 @@ export const VehicleForm = () => {
                 </div>
             </fieldset>
             
-            <button className="btn btn-primary" 
-                    disabled={isLoading} 
-                    onClick={handleSaveVehicle}
-                >
-                {vehicleId ? "Update Vehicle" : "Add Vehicle"}
-            </button>
+            <div className={classes.root}>
+                <Button variant="contained" color="primary" className="btn btn-primary" disabled={isLoading} onClick={handleSaveVehicle}>
+                    {vehicleId ? "Update Vehicle" : "Add Vehicle"}
+                </Button>
+            </div>
         </form>
     )
 }
